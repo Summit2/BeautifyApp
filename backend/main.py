@@ -3,35 +3,49 @@
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
-from PIL import Image
+from PIL import Image, ImageFilter
 import io
 
 app = FastAPI()
 
-@app.post("/grayscale")
-async def grayscale(image: UploadFile = File(...)):
+# Placeholder transformations for demonstration purposes
+def apply_waifu2x(img: Image.Image) -> Image.Image:
+    # Placeholder for waifu2x logic
+    return img.filter(ImageFilter.SMOOTH)
+
+def apply_lanczos(img: Image.Image) -> Image.Image:
+    return img.resize((img.width * 2, img.height * 2), Image.LANCZOS)
+
+def apply_srgan(img: Image.Image) -> Image.Image:
+    # Placeholder for SRGAN logic
+    return img.resize(img.width * 0,1, img.height * 2)
+
+@app.post("/waifu2x/")
+async def waifu2x(image: UploadFile = File(...)):
     image_data = await image.read()
-    img = Image.open(io.BytesIO(image_data)).convert("L")
+    img = Image.open(io.BytesIO(image_data))
+    img = apply_waifu2x(img)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     buf.seek(0)
     return StreamingResponse(buf, media_type="image/png")
 
-@app.post("/resize")
-async def resize(image: UploadFile = File(...), width: int = 100, height: int = 100):
+@app.post("/lanczos/")
+async def lanczos(image: UploadFile = File(...)):
     image_data = await image.read()
     img = Image.open(io.BytesIO(image_data))
-    img = img.resize((width, height))
+    print(img)
+    img = apply_lanczos(img)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     buf.seek(0)
     return StreamingResponse(buf, media_type="image/png")
 
-@app.post("/rotate")
-async def rotate(image: UploadFile = File(...), angle: int = 90):
+@app.post("/srgan/")
+async def srgan(image: UploadFile = File(...)):
     image_data = await image.read()
     img = Image.open(io.BytesIO(image_data))
-    img = img.rotate(angle)
+    img = apply_srgan(img)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     buf.seek(0)
@@ -39,4 +53,4 @@ async def rotate(image: UploadFile = File(...), angle: int = 90):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)

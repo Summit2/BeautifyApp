@@ -10,13 +10,23 @@
     <div class="container">
         <h1>Image Transformer</h1>
         <input type="file" id="upload" accept="image/*">
-        <div>
-            <button onclick="transformImage('grayscale')">Grayscale</button>
-            <button onclick="transformImage('resize')">Resize</button>
-            <button onclick="transformImage('rotate')">Rotate</button>
-        </div>
-        <div id="result">
-            <img id="output" src="" alt="Transformed Image">
+        <button onclick="transformImages()">Transform Images</button>
+        <div id="results">
+            <div class="result">
+                <h2>Waifu2x</h2>
+                <img id="waifu2xOutput" src="" alt="Waifu2x Image">
+                <button id="waifu2xDownload" onclick="downloadImage('waifu2xOutput')">Download</button>
+            </div>
+            <div class="result">
+                <h2>Lanczos</h2>
+                <img id="lanczosOutput" src="" alt="Lanczos Image">
+                <button id="lanczosDownload" onclick="downloadImage('lanczosOutput')">Download</button>
+            </div>
+            <div class="result">
+                <h2>SRGAN</h2>
+                <img id="srganOutput" src="" alt="SRGAN Image">
+                <button id="srganDownload" onclick="downloadImage('srganOutput')">Download</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

@@ -1,20 +1,21 @@
-async function transformImage(endpoint) {
+async function transformImages() {
     const uploadInput = document.getElementById('upload');
     if (uploadInput.files.length === 0) {
         alert("Please upload an image first.");
         return;
     }
 
+    await Promise.all([
+        transformImage('waifu2x', 'waifu2xOutput'),
+        transformImage('lanczos', 'lanczosOutput'),
+        transformImage('srgan', 'srganOutput')
+    ]);
+}
+
+async function transformImage(endpoint, outputElementId) {
+    const url = `http://127.0.0.1:8000/${endpoint}`;
     const formData = new FormData();
-    formData.append('image', uploadInput.files[0]);
-
-    let url = `http://127.0.0.1:8000/${endpoint}`;
-
-    if (endpoint === 'resize') {
-        url += '?width=200&height=200';
-    } else if (endpoint === 'rotate') {
-        url += '?angle=45';
-    }
+    formData.append('image', document.getElementById('upload').files[0]);
 
     const response = await fetch(url, {
         method: 'POST',
@@ -23,9 +24,24 @@ async function transformImage(endpoint) {
 
     if (response.ok) {
         const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        document.getElementById('output').src = url;
+        const imgUrl = URL.createObjectURL(blob);
+        document.getElementById(outputElementId).src = imgUrl;
+
+        const downloadButtonId = outputElementId + 'Download';
+        document.getElementById(downloadButtonId).style.display = 'inline-block';
+        document.getElementById(downloadButtonId).href = imgUrl;
+        document.getElementById(downloadButtonId).download = `${outputElementId}.png`;
     } else {
         alert("An error occurred while processing the image.");
     }
+}
+
+function downloadImage(outputElementId) {
+    const imgElement = document.getElementById(outputElementId);
+    const link = document.createElement('a');
+    link.href = imgElement.src;
+    link.download = `${outputElementId}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
