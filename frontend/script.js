@@ -6,14 +6,14 @@ async function transformImages() {
     }
 
     await Promise.all([
-        transformImage('waifu2x', 'waifu2xOutput'),
+        transformImage('bicubic', 'bicubicOutput'),
         transformImage('lanczos', 'lanczosOutput'),
-        transformImage('srgan', 'srganOutput')
+        transformImage('nearest', 'nearestOutput')
     ]);
 }
 
 async function transformImage(endpoint, outputElementId) {
-    const url = `http://127.0.0.1:8000/${endpoint}`;
+    const url = `http://127.0.0.1:8000/${endpoint}/`; // Ensure trailing slash
     const formData = new FormData();
     formData.append('image', document.getElementById('upload').files[0]);
 

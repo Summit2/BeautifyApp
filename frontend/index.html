@@ -13,19 +13,19 @@
         <button onclick="transformImages()">Transform Images</button>
         <div id="results">
             <div class="result">
-                <h2>Waifu2x</h2>
-                <img id="waifu2xOutput" src="" alt="Waifu2x Image">
-                <button id="waifu2xDownload" onclick="downloadImage('waifu2xOutput')">Download</button>
+                <h2>Bicubic</h2>
+                <img id="bicubicOutput" src="" alt="Bicubic Image">
+                <button id="bicubicDownload" style="display:none;" onclick="downloadImage('bicubicOutput')">Download</button>
             </div>
             <div class="result">
                 <h2>Lanczos</h2>
                 <img id="lanczosOutput" src="" alt="Lanczos Image">
-                <button id="lanczosDownload" onclick="downloadImage('lanczosOutput')">Download</button>
+                <button id="lanczosDownload" style="display:none;" onclick="downloadImage('lanczosOutput')">Download</button>
             </div>
             <div class="result">
-                <h2>SRGAN</h2>
-                <img id="srganOutput" src="" alt="SRGAN Image">
-                <button id="srganDownload" onclick="downloadImage('srganOutput')">Download</button>
+                <h2>Nearest</h2>
+                <img id="nearestOutput" src="" alt="Nearest Image">
+                <button id="nearestDownload" style="display:none;" onclick="downloadImage('nearestOutput')">Download</button>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
 from PIL import Image
 import io
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -26,6 +27,7 @@ async def lanczos_endpoint(image: UploadFile = File(...)):
 
 @app.post("/bicubic/")
 async def bicubic_endpoint(image: UploadFile = File(...)):
+    return JSONResponse(status_code=200, content={"message": "Everything is OK"})
     image_data = await image.read()
     img = Image.open(io.BytesIO(image_data))
     img = apply_bicubic(img)
