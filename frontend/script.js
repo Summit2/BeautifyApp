@@ -5,6 +5,9 @@ async function transformImages() {
         return;
     }
 
+
+    previewImage();
+
     await Promise.all([
         transformImage('bicubic', 'bicubicOutput'),
         transformImage('lanczos', 'lanczosOutput'),
@@ -13,9 +16,9 @@ async function transformImages() {
 }
 
 async function transformImage(endpoint, outputElementId) {
-    const url = `http://127.0.0.1:8000/${endpoint}/`; // Ensure trailing slash
+    const url = `http://127.0.0.1:8000/${endpoint}/`; 
     const formData = new FormData();
-    formData.append('image', document.getElementById('upload').files[0]);
+    formData.append('file', document.getElementById('upload').files[0]);
 
     const response = await fetch(url, {
         method: 'POST',
@@ -33,6 +36,24 @@ async function transformImage(endpoint, outputElementId) {
         document.getElementById(downloadButtonId).download = `${outputElementId}.png`;
     } else {
         alert("An error occurred while processing the image.");
+    }
+}
+
+function previewImage() {
+    const fileInput = document.getElementById('upload');
+    const uploadedImage = document.getElementById('uploadedImage');
+    
+    const file = fileInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImage.src = e.target.result;
+            uploadedImage.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        uploadedImage.src = '';
+        uploadedImage.style.display = 'none';
     }
 }
 

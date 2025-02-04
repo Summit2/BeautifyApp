@@ -8,24 +8,31 @@
 </head>
 <body>
     <div class="container">
-        <h1>Image Transformer</h1>
-        <input type="file" id="upload" accept="image/*">
+        <h1>Beautify App</h1>
+        <input type="file" id="upload" accept="image/*" onchange="previewImage()">
+        <h2>Uploaded Image</h2>
+        <div id="imagePreview" class="image-preview">
+            
+            <img id="uploadedImage" src="" alt="Uploaded Image">
+        </div>
         <button onclick="transformImages()">Transform Images</button>
         <div id="results">
+            
+            <div class="result">
+                <h2>Nearest</h2>
+                <img id="nearestOutput" src="" alt="Nearest Image">
+                <button id="nearestDownload" style="display:none;" onclick="downloadImage('nearestOutput')">Download</button>
+            </div>
             <div class="result">
                 <h2>Bicubic</h2>
                 <img id="bicubicOutput" src="" alt="Bicubic Image">
                 <button id="bicubicDownload" style="display:none;" onclick="downloadImage('bicubicOutput')">Download</button>
             </div>
+            
             <div class="result">
                 <h2>Lanczos</h2>
                 <img id="lanczosOutput" src="" alt="Lanczos Image">
                 <button id="lanczosDownload" style="display:none;" onclick="downloadImage('lanczosOutput')">Download</button>
-            </div>
-            <div class="result">
-                <h2>Nearest</h2>
-                <img id="nearestOutput" src="" alt="Nearest Image">
-                <button id="nearestDownload" style="display:none;" onclick="downloadImage('nearestOutput')">Download</button>
             </div>
         </div>
     </div>
