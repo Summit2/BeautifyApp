@@ -15,5 +15,5 @@
 
 
 
-Разница в работе методов:
+Разница в работе методов:  
 ![wool_final](https://github.com/user-attachments/assets/6a978011-2580-44e1-8f89-cd300a07e41a)  
