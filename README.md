@@ -8,7 +8,8 @@
 Остановить проект: docker-compose down  
 
 Пример работы:
-![Снимок экрана от 2025-02-04 18-22-57](https://github.com/user-attachments/assets/92a1d391-cee7-45ca-8ad4-da491c32ba4b)  
+![Снимок экрана от 2025-02-04 18-30-09](https://github.com/user-attachments/assets/0c4d1710-9297-4058-a80a-7c22ecefc34a)  
+
 
 
 
